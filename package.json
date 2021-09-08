@@ -1,6 +1,6 @@
 {
   "name": "react-bug-trap",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A react component that catches errors in production and sends them to your Confluence page.",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -14,6 +14,8 @@
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.15.5",
+    "@rollup/plugin-commonjs": "^20.0.0",
+    "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^13.0.4",
     "@storybook/addon-actions": "^6.3.8",
     "@storybook/addon-essentials": "^6.3.8",
