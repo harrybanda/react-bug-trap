@@ -1,15 +1,39 @@
 import "bulma/css/bulma.min.css";
 import React, { Component } from "react";
+import FingerprintJS from "@fingerprintjs/fingerprintjs";
+import {
+  browserName,
+  browserVersion,
+  osName,
+  osVersion,
+} from "react-device-detect";
+import moment from "moment";
+import StackTrace from "stacktrace-js";
+import axios from "axios";
+import PropTypes from "prop-types";
 
 export class BugTrap extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      hasError: false, //set to false when publishing true when testing
+      hasError: true, //set to false when publishing true when testing
       modalState: true,
       name: "",
       email: "",
       report: "",
+      errorData: {
+        userId: "",
+        fullErrorMessage: "",
+        errorName: "",
+        errorMessage: "",
+        browserName: "",
+        browserVersion: "",
+        osName: "",
+        osVersion: "",
+        url: "",
+        timestamp: "",
+        fileInfo: "",
+      },
     };
     this.toggleModal = this.toggleModal.bind(this);
     this.handleChangeName = this.handleChangeName.bind(this);
@@ -37,12 +61,6 @@ export class BugTrap extends Component {
   }
 
   handleSubmit(event) {
-    alert(
-      "A data was submitted: " +
-        this.state.name +
-        this.state.email +
-        this.state.report
-    );
     event.preventDefault();
     this.toggleModal();
   }
@@ -59,8 +77,33 @@ export class BugTrap extends Component {
   }
 
   componentDidCatch(error, errorInfo) {
-    console.log(error);
-    console.log(errorInfo);
+    var errorData = { ...this.state.errorData };
+
+    const fpPromise = FingerprintJS.load();
+    (async () => {
+      const fp = await fpPromise;
+      const result = await fp.get();
+      const visitorId = result.visitorId;
+
+      errorData.userId = visitorId;
+      errorData.fullErrorMessage = error.toString();
+      errorData.errorMessage = error.message;
+      errorData.errorName = error.name;
+      errorData.browserName = browserName;
+      errorData.browserVersion = browserVersion;
+      errorData.osName = osName;
+      errorData.osVersion = osVersion;
+      errorData.url = window.location.href;
+      errorData.timestamp = moment().unix();
+
+      StackTrace.fromError(error).then((err) => {
+        errorData.fileInfo = JSON.stringify(err[0]);
+        this.setState({ errorData });
+        axios.post(this.props.webhook, {
+          errorData: this.state.errorData,
+        });
+      });
+    })();
   }
 
   render() {
@@ -149,4 +192,8 @@ const Modal = ({ children, closeModal, modalState, title }) => {
       </div>
     </div>
   );
+};
+
+BugTrap.propTypes = {
+  webhook: PropTypes.string.isRequired,
 };
