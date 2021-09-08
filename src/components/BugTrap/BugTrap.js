@@ -16,7 +16,7 @@ export class BugTrap extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      hasError: true, //set to false when publishing true when testing
+      hasError: false, //set to false when publishing true when testing
       modalState: true,
       name: "",
       email: "",
@@ -61,6 +61,13 @@ export class BugTrap extends Component {
   }
 
   handleSubmit(event) {
+    alert(
+      "A data was submitted: " +
+        this.state.name +
+        this.state.email +
+        this.state.report +
+        JSON.stringify(this.state.errorData)
+    );
     event.preventDefault();
     this.toggleModal();
   }
@@ -146,7 +153,7 @@ export class BugTrap extends Component {
             <div className="field">
               <p className="control">
                 <textarea
-                  class="textarea"
+                  className="textarea"
                   placeholder="I clicked on 'X'"
                   value={this.state.report}
                   onChange={this.handleChangeReport}
