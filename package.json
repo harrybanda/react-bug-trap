@@ -1,6 +1,6 @@
 {
   "name": "react-bug-trap",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A react component that catches errors in production and sends them to your Confluence page.",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -41,6 +41,7 @@
     "moment": "^2.29.1",
     "prop-types": "^15.7.2",
     "react-device-detect": "^1.17.0",
-    "stacktrace-js": "^2.0.2"
+    "stacktrace-js": "^2.0.2",
+    "uuid-by-string": "^3.0.4"
   }
 }
