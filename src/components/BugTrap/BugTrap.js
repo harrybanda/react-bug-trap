@@ -23,7 +23,7 @@ export class BugTrap extends Component {
       email: "",
       report: "",
       errorData: {
-        errorId: "",
+        errorsId: "",
         userId: "",
         fullErrorMessage: "",
         errorName: "",
@@ -97,7 +97,7 @@ export class BugTrap extends Component {
       errorData.osVersion = osVersion;
       errorData.url = window.location.href;
       errorData.timestamp = moment().unix();
-      errorData.errorId = getUuidByString(error.message);
+      errorData.errorsId = "error_group_" + getUuidByString(error.message);
 
       StackTrace.fromError(error).then((err) => {
         errorData.fileInfo = JSON.stringify(err[0]);
