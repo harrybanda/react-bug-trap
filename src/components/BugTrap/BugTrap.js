@@ -33,8 +33,7 @@ export class BugTrap extends Component {
         osName: "",
         osVersion: "",
         url: "",
-        timestamp: "",
-        timeAgo: "",
+        date: "",
         fileInfo: "",
       },
     };
@@ -97,8 +96,7 @@ export class BugTrap extends Component {
       errorData.osName = osName;
       errorData.osVersion = osVersion;
       errorData.url = window.location.href;
-      errorData.timestamp = moment().unix();
-      errorData.timeAgo = moment().fromNow();
+      errorData.date = moment().format();
       errorData.errorsId = "error_group_" + getUuidByString(error.message);
 
       StackTrace.fromError(error).then((err) => {
