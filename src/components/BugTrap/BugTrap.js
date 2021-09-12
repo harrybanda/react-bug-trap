@@ -36,6 +36,7 @@ export class BugTrap extends Component {
         osVersion: "",
         url: "",
         date: "",
+        fullDate: "",
         fileInfo: "",
       },
     };
@@ -107,6 +108,9 @@ export class BugTrap extends Component {
       errorData.osName = osName;
       errorData.osVersion = osVersion;
       errorData.url = window.location.href;
+      errorData.fullDate = moment(moment().format())
+        .tz(moment.tz.guess())
+        .format("LLLL z");
       errorData.date = moment().format();
       errorData.errorGroupId = "error_group_" + getUuidByString(error.message);
       errorData.errorId = "error_id_" + uuidv4();
