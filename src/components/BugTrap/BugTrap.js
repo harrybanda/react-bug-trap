@@ -12,6 +12,7 @@ import StackTrace from "stacktrace-js";
 import axios from "axios";
 import PropTypes from "prop-types";
 import getUuidByString from "uuid-by-string";
+import { v4 as uuidv4 } from "uuid";
 
 export class BugTrap extends Component {
   constructor(props) {
@@ -23,7 +24,8 @@ export class BugTrap extends Component {
       email: "",
       report: "",
       errorData: {
-        errorsId: "",
+        errorGroupId: "",
+        errorId: "",
         userId: "",
         fullErrorMessage: "",
         errorName: "",
@@ -104,7 +106,8 @@ export class BugTrap extends Component {
       errorData.osVersion = osVersion;
       errorData.url = window.location.href;
       errorData.date = moment().format();
-      errorData.errorsId = "error_group_" + getUuidByString(error.message);
+      errorData.errorGroupId = "error_group_" + getUuidByString(error.message);
+      errorData.errorId = "error_id_" + uuidv4();
 
       StackTrace.fromError(error).then((err) => {
         errorData.fileInfo = JSON.stringify(err[0]);
