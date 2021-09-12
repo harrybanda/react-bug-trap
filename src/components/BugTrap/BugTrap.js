@@ -63,6 +63,13 @@ export class BugTrap extends Component {
   }
 
   handleSubmit(event) {
+    axios.post(this.props.webhook, {
+      feedback: {
+        name: this.state.name,
+        email: this.state.email,
+        report: this.state.report,
+      },
+    });
     event.preventDefault();
     this.toggleModal();
   }
