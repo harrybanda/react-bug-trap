@@ -70,6 +70,8 @@ export class BugTrap extends Component {
         name: this.state.name,
         email: this.state.email,
         report: this.state.report,
+        errorGroupId: this.errorData.errorGroupId,
+        errorId: this.state.errorData.errorId,
       },
     });
     event.preventDefault();
