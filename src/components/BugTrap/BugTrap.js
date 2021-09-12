@@ -70,10 +70,19 @@ export class BugTrap extends Component {
         name: this.state.name,
         email: this.state.email,
         report: this.state.report,
-        errorGroupId: this.errorData.errorGroupId,
+        errorGroupId: this.state.errorData.errorGroupId,
         errorId: this.state.errorData.errorId,
       },
     });
+    alert(
+      JSON.stringify({
+        name: this.state.name,
+        email: this.state.email,
+        report: this.state.report,
+        errorGroupId: this.state.errorData.errorGroupId,
+        errorId: this.state.errorData.errorId,
+      })
+    );
     event.preventDefault();
     this.toggleModal();
   }
